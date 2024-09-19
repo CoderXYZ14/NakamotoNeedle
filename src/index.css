@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  height:100vh;
+  height: 100vh;
   background-color: #113;
   color: #fff;
   background-image: radial-gradient(at 50% 50%, #226 20%, transparent 100%);
