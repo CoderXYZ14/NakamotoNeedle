@@ -22,9 +22,12 @@ const logosUrl: Record<ProviderName, { source: string }> = {
 };
 
 const ResultRow = (props: ResultRowProps) => {
+  let url = `https://${props.providerName}.com`;
+  if (props.providerName === "guardarian") url += "/buy-btc";
+
   return (
     <a
-      href={`https://${props.providerName}.com`}
+      href={url}
       target="_blank"
       className="block relative border min-h-16 border-white/10 rounded-lg bg-gradient-to-r from-purple-500/10 to-blue-500/10 p-4 my-2 overflow-hidden"
     >
