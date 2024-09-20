@@ -3,20 +3,30 @@ import { useState, useEffect } from "react";
 import { AmountInput, ResultRow } from "./components";
 import { sortBy } from "lodash";
 
+type ProviderName = "paybis" | "guardarian" | "moonpay" | "transak";
+
 type CachedResult = {
   provider: string;
   btc: string;
 };
+
+// Type guard to check if a string is a valid ProviderName
+const isProviderName = (name: string): name is ProviderName => {
+  return ["paybis", "guardarian", "moonpay", "transak"].includes(name);
+};
+
 function App() {
   const [amount, setAmount] = useState("100");
   const [cachedResults, setCachedResult] = useState<CachedResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     axios.get("http://localhost:3000/cached").then((res) => {
       setCachedResult(res.data);
       setIsLoading(false);
     });
   }, []);
+
   return (
     <main className="max-w-2xl mx-auto px-4 py-8">
       <h1 className="uppercase text-6xl text-center font-bold bg-gradient-to-br from-purple-600 to-sky-400 bg-clip-text text-transparent from-30%">
@@ -40,9 +50,18 @@ function App() {
         {!isLoading &&
           sortBy(cachedResults, "btc")
             .reverse()
-            .map((result: CachedResult) => (
-              <ResultRow providerName={result.provider} btc={result.btc} />
-            ))}
+            .map((result: CachedResult) => {
+              const providerName = isProviderName(result.provider)
+                ? result.provider
+                : undefined;
+              return (
+                <ResultRow
+                  key={result.provider}
+                  providerName={providerName}
+                  btc={result.btc}
+                />
+              );
+            })}
       </div>
     </main>
   );
