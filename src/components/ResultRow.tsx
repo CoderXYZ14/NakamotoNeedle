@@ -23,7 +23,11 @@ const logosUrl: Record<ProviderName, { source: string }> = {
 
 const ResultRow = (props: ResultRowProps) => {
   return (
-    <div className="relative border min-h-16 border-white/10 rounded-lg bg-gradient-to-r from-purple-500/10 to-blue-500/10 p-4 my-2 overflow-hidden">
+    <a
+      href={`https://${props.providerName}.com`}
+      target="_blank"
+      className="block relative border min-h-16 border-white/10 rounded-lg bg-gradient-to-r from-purple-500/10 to-blue-500/10 p-4 my-2 overflow-hidden"
+    >
       <div className="flex gap-4 items-center">
         {props.providerName && (
           <div className="grow items-center flex">
@@ -48,7 +52,7 @@ const ResultRow = (props: ResultRowProps) => {
       {props.loading && (
         <div className="inset-0 absolute rounded-lg bg-gradient-to-r from-transparent via-blue-800/50 to-transparent skeleton-animation"></div>
       )}
-    </div>
+    </a>
   );
 };
 
